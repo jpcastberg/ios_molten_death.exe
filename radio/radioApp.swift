@@ -1,9 +1,9 @@
-//
-//  radioApp.swift
-//  radio
-//
-//  Created by John Castberg on 7/15/23.
-//
+/*
+See the LICENSE.txt file for this sample’s licensing information.
+
+Abstract:
+The application delegate that manages the application life cycle.
+*/
 
 import SwiftUI
 
@@ -12,6 +12,29 @@ struct radioApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+        }
+        
+    }
+}
+
+struct ContentView: View {
+    @State private var isPlaying = false
+    @State private var currentSong = ""
+    @State private var albumArtURL: URL?
+    @State private var assetPlayer: AssetPlayer?
+
+    init() {
+        do {
+            assetPlayer = try AssetPlayer()
+        } catch {}
+    }
+
+    var body: some View {
+        VStack {
+            Image("DefaultImage")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+            Text("molten_death.exe")
         }
     }
 }

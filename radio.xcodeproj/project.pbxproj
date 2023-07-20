@@ -8,12 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		A884F7752A630DA300E58D5A /* radioApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A884F7742A630DA300E58D5A /* radioApp.swift */; };
-		A884F7772A630DA300E58D5A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A884F7762A630DA300E58D5A /* ContentView.swift */; };
+		A884F7772A630DA300E58D5A /* TempContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A884F7762A630DA300E58D5A /* TempContentView.swift */; };
 		A884F7792A630DA600E58D5A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A884F7782A630DA600E58D5A /* Assets.xcassets */; };
 		A884F77C2A630DA600E58D5A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A884F77B2A630DA600E58D5A /* Preview Assets.xcassets */; };
-		A884F7862A630DA600E58D5A /* radioTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A884F7852A630DA600E58D5A /* radioTests.swift */; };
-		A884F7902A630DA600E58D5A /* radioUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A884F78F2A630DA600E58D5A /* radioUITests.swift */; };
-		A884F7922A630DA600E58D5A /* radioUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A884F7912A630DA600E58D5A /* radioUITestsLaunchTests.swift */; };
+		A885BBED2A69C1BD007B06E8 /* azuracast_token.txt in Resources */ = {isa = PBXBuildFile; fileRef = A885BBEC2A69C1BD007B06E8 /* azuracast_token.txt */; };
+		A89A89072A686924005E82F7 /* MetadataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89A88FC2A686924005E82F7 /* MetadataDelegate.swift */; };
+		A89A89082A686924005E82F7 /* AssetPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89A88FD2A686924005E82F7 /* AssetPlayer.swift */; };
+		A89A890A2A686924005E82F7 /* NowPlayableMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89A89002A686924005E82F7 /* NowPlayableMetadata.swift */; };
+		A89A890B2A686924005E82F7 /* NowPlayable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89A89012A686924005E82F7 /* NowPlayable.swift */; };
+		A89A890C2A686924005E82F7 /* IOSNowPlayableBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89A89022A686924005E82F7 /* IOSNowPlayableBehavior.swift */; };
+		A89A890D2A686924005E82F7 /* NowPlayableCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89A89032A686924005E82F7 /* NowPlayableCommand.swift */; };
+		A89A890E2A686924005E82F7 /* RadioStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89A89052A686924005E82F7 /* RadioStation.swift */; };
+		A89A890F2A686924005E82F7 /* NowPlayingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89A89062A686924005E82F7 /* NowPlayingResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,14 +42,21 @@
 /* Begin PBXFileReference section */
 		A884F7712A630DA300E58D5A /* radio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = radio.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A884F7742A630DA300E58D5A /* radioApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = radioApp.swift; sourceTree = "<group>"; };
-		A884F7762A630DA300E58D5A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A884F7762A630DA300E58D5A /* TempContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempContentView.swift; sourceTree = "<group>"; };
 		A884F7782A630DA600E58D5A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A884F77B2A630DA600E58D5A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A884F7812A630DA600E58D5A /* radioTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = radioTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A884F7852A630DA600E58D5A /* radioTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = radioTests.swift; sourceTree = "<group>"; };
 		A884F78B2A630DA600E58D5A /* radioUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = radioUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A884F78F2A630DA600E58D5A /* radioUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = radioUITests.swift; sourceTree = "<group>"; };
-		A884F7912A630DA600E58D5A /* radioUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = radioUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		A884F7A02A63E80700E58D5A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		A885BBEC2A69C1BD007B06E8 /* azuracast_token.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = azuracast_token.txt; sourceTree = "<group>"; };
+		A89A88FC2A686924005E82F7 /* MetadataDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetadataDelegate.swift; sourceTree = "<group>"; };
+		A89A88FD2A686924005E82F7 /* AssetPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetPlayer.swift; sourceTree = "<group>"; };
+		A89A89002A686924005E82F7 /* NowPlayableMetadata.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NowPlayableMetadata.swift; sourceTree = "<group>"; };
+		A89A89012A686924005E82F7 /* NowPlayable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NowPlayable.swift; sourceTree = "<group>"; };
+		A89A89022A686924005E82F7 /* IOSNowPlayableBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IOSNowPlayableBehavior.swift; sourceTree = "<group>"; };
+		A89A89032A686924005E82F7 /* NowPlayableCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NowPlayableCommand.swift; sourceTree = "<group>"; };
+		A89A89052A686924005E82F7 /* RadioStation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadioStation.swift; sourceTree = "<group>"; };
+		A89A89062A686924005E82F7 /* NowPlayingResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NowPlayingResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,8 +88,6 @@
 			isa = PBXGroup;
 			children = (
 				A884F7732A630DA300E58D5A /* radio */,
-				A884F7842A630DA600E58D5A /* radioTests */,
-				A884F78E2A630DA600E58D5A /* radioUITests */,
 				A884F7722A630DA300E58D5A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -94,10 +105,15 @@
 		A884F7732A630DA300E58D5A /* radio */ = {
 			isa = PBXGroup;
 			children = (
+				A89A88FF2A686924005E82F7 /* NowPlayable */,
+				A89A88FB2A686924005E82F7 /* Player */,
+				A89A89042A686924005E82F7 /* RadioStation */,
+				A884F7A02A63E80700E58D5A /* Info.plist */,
 				A884F7742A630DA300E58D5A /* radioApp.swift */,
-				A884F7762A630DA300E58D5A /* ContentView.swift */,
+				A884F7762A630DA300E58D5A /* TempContentView.swift */,
 				A884F7782A630DA600E58D5A /* Assets.xcassets */,
 				A884F77A2A630DA600E58D5A /* Preview Content */,
+				A885BBEC2A69C1BD007B06E8 /* azuracast_token.txt */,
 			);
 			path = radio;
 			sourceTree = "<group>";
@@ -110,21 +126,33 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		A884F7842A630DA600E58D5A /* radioTests */ = {
+		A89A88FB2A686924005E82F7 /* Player */ = {
 			isa = PBXGroup;
 			children = (
-				A884F7852A630DA600E58D5A /* radioTests.swift */,
+				A89A88FC2A686924005E82F7 /* MetadataDelegate.swift */,
+				A89A88FD2A686924005E82F7 /* AssetPlayer.swift */,
 			);
-			path = radioTests;
+			path = Player;
 			sourceTree = "<group>";
 		};
-		A884F78E2A630DA600E58D5A /* radioUITests */ = {
+		A89A88FF2A686924005E82F7 /* NowPlayable */ = {
 			isa = PBXGroup;
 			children = (
-				A884F78F2A630DA600E58D5A /* radioUITests.swift */,
-				A884F7912A630DA600E58D5A /* radioUITestsLaunchTests.swift */,
+				A89A89002A686924005E82F7 /* NowPlayableMetadata.swift */,
+				A89A89012A686924005E82F7 /* NowPlayable.swift */,
+				A89A89022A686924005E82F7 /* IOSNowPlayableBehavior.swift */,
+				A89A89032A686924005E82F7 /* NowPlayableCommand.swift */,
 			);
-			path = radioUITests;
+			path = NowPlayable;
+			sourceTree = "<group>";
+		};
+		A89A89042A686924005E82F7 /* RadioStation */ = {
+			isa = PBXGroup;
+			children = (
+				A89A89052A686924005E82F7 /* RadioStation.swift */,
+				A89A89062A686924005E82F7 /* NowPlayingResponse.swift */,
+			);
+			path = RadioStation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -232,6 +260,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A884F77C2A630DA600E58D5A /* Preview Assets.xcassets in Resources */,
+				A885BBED2A69C1BD007B06E8 /* azuracast_token.txt in Resources */,
 				A884F7792A630DA600E58D5A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -257,8 +286,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A884F7772A630DA300E58D5A /* ContentView.swift in Sources */,
+				A89A890B2A686924005E82F7 /* NowPlayable.swift in Sources */,
+				A89A890D2A686924005E82F7 /* NowPlayableCommand.swift in Sources */,
+				A884F7772A630DA300E58D5A /* TempContentView.swift in Sources */,
+				A89A89082A686924005E82F7 /* AssetPlayer.swift in Sources */,
+				A89A890C2A686924005E82F7 /* IOSNowPlayableBehavior.swift in Sources */,
+				A89A890A2A686924005E82F7 /* NowPlayableMetadata.swift in Sources */,
+				A89A890E2A686924005E82F7 /* RadioStation.swift in Sources */,
+				A89A89072A686924005E82F7 /* MetadataDelegate.swift in Sources */,
 				A884F7752A630DA300E58D5A /* radioApp.swift in Sources */,
+				A89A890F2A686924005E82F7 /* NowPlayingResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,7 +303,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A884F7862A630DA600E58D5A /* radioTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,8 +310,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A884F7922A630DA600E58D5A /* radioUITestsLaunchTests.swift in Sources */,
-				A884F7902A630DA600E58D5A /* radioUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -417,13 +451,16 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"radio/Preview Content\"";
+				DEVELOPMENT_TEAM = U8Z97G4UB2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = radio/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = molten_death.exe;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -445,13 +482,16 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"radio/Preview Content\"";
+				DEVELOPMENT_TEAM = U8Z97G4UB2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = radio/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = molten_death.exe;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

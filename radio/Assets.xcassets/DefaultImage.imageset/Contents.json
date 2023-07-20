@@ -1,6 +1,7 @@
 {
-  "colors" : [
+  "images" : [
     {
+      "filename" : "molten_death_default_image_1024.png",
       "idiom" : "universal"
     }
   ],
