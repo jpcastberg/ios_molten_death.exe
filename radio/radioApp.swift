@@ -13,7 +13,6 @@ struct radioApp: App {
         WindowGroup {
             ContentView()
         }
-        
     }
 }
 

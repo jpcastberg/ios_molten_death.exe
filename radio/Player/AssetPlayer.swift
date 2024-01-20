@@ -37,7 +37,7 @@ class AssetPlayer {
     init() throws {
         self.nowPlayableBehavior = IOSNowPlayableBehavior()
 
-        let streamURL = URL(string: "https://radio.castberg.media/listen/molten_death.exe/radio.mp3")!
+        let streamURL = URL(string: "https://radio.castberg.media/hls/molten_death.exe/live.m3u8")!
         self.player = AVPlayer(url: streamURL)
         player.allowsExternalPlayback = true
 

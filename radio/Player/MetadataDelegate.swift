@@ -6,7 +6,7 @@ class MetadataDelegate: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     private var metadataUpdateClosure: ((NowPlayableStaticMetadata, NowPlayingResponse?) -> Void)
     private var songDidChange = false
     private let nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
-    private var timer: Timer?
+    private var currentStreamTitle: String?
     
     init(radioStation: RadioStation, metadataUpdateClosure: @escaping (NowPlayableStaticMetadata, NowPlayingResponse?) -> Void) {
         self.radioStation = radioStation
@@ -14,26 +14,42 @@ class MetadataDelegate: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     }
 
     func metadataOutput(_ output: AVPlayerItemMetadataOutput, didOutputTimedMetadataGroups groups: [AVTimedMetadataGroup], from track: AVPlayerItemTrack?) {
-        for metadataGroup in groups {
-            for item in metadataGroup.items {
-                if item.identifier == AVMetadataIdentifier.icyMetadataStreamTitle {
-                    Task {
-                        do {
-                            let loadingStreamTitle = try await item.load(.value)
-                            let streamTitle = String(describing: loadingStreamTitle!)
-                            if streamTitle.hasPrefix("BUMPER ") {
-                                self.metadataUpdateClosure(createMetadataForBumper(streamTitle: streamTitle), nil)
-                            }
+        Task {
+            do {
+                let songTitleMeta = groups[0].items.first(where: { $0.commonKey == AVMetadataKey.commonKeyTitle })
+                let albumNameMeta = groups[0].items.first(where: { $0.commonKey == AVMetadataKey.commonKeyAlbumName })
+                let artistMeta = groups[0].items.first(where: { $0.commonKey == AVMetadataKey.commonKeyArtist })
 
-                            self.radioStation.fetchNowPlayingApiDataForStreamTitle(with: streamTitle, completion: {nowPlayingResponse in
-                                self.convertNowPlayingResponseToMetadata(with: nowPlayingResponse, completion: {nowPlayableStaticMetadata in
-                                    self.metadataUpdateClosure(nowPlayableStaticMetadata, nowPlayingResponse)
-                                })
-                            })
-                        } catch {}
-                    }
+                let songTitle = String(describing: try await songTitleMeta!.load(.value)!)
+                // var albumName = ""
+                var artist = "No Artist"
+                
+                //  if albumNameMeta != nil {
+                //      albumName = String(describing: try await albumNameMeta!.load(.value)!)
+                //  }
+                
+                if artistMeta != nil {
+                    artist = String(describing: try await artistMeta!.load(.value)!)
                 }
-            }
+                
+                let streamTitle = artist + " - " + songTitle
+                
+                if streamTitle == currentStreamTitle {
+                    return
+                }
+                
+                currentStreamTitle = streamTitle
+                
+                if songTitle.hasPrefix("BUMPER ") {
+                    self.metadataUpdateClosure(createMetadataForBumper(streamTitle: songTitle), nil)
+                } else {
+                    self.radioStation.fetchNowPlayingApiDataForStreamTitle(with: streamTitle, completion: {nowPlayingResponse in
+                        self.convertNowPlayingResponseToMetadata(with: nowPlayingResponse, completion: {nowPlayableStaticMetadata in
+                            self.metadataUpdateClosure(nowPlayableStaticMetadata, nowPlayingResponse)
+                        })
+                    })
+                }
+            } catch {}
         }
     }
 
