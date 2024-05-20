@@ -72,7 +72,6 @@ extension NowPlayable {
     }
     
     func setNowPlayingPlaybackInfo(_ metadata: NowPlayableDynamicMetadata) {
-        
         let nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
         var nowPlayingInfo = nowPlayingInfoCenter.nowPlayingInfo ?? [String: Any]()
         nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = metadata.duration

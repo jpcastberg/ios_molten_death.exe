@@ -9,8 +9,8 @@ Abstract:
 import AVFoundation
 import MediaPlayer
 
-class AssetPlayer {
-    enum PlayerState {
+public class AssetPlayer: ObservableObject {
+    public enum PlayerState {
         case stopped
         case playing
         case paused
@@ -18,9 +18,9 @@ class AssetPlayer {
     
     let nowPlayableBehavior: NowPlayable
     
-    let player: AVPlayer
+    var player: AVPlayer
     
-    var playerState: PlayerState = .stopped
+    @Published var playerState: PlayerState = .stopped
     
     private var isInterrupted: Bool = false
     
@@ -30,7 +30,7 @@ class AssetPlayer {
     
     private static let mediaSelectionKey = "availableMediaCharacteristicsWithMediaSelectionOptions"
     
-    private let radioStation = RadioStation()
+    public let radioStation = RadioStation()
     private let metadataOutput = AVPlayerItemMetadataOutput(identifiers: nil)
     private var metadataDelegate: MetadataDelegate?
     
@@ -42,12 +42,19 @@ class AssetPlayer {
         player.allowsExternalPlayback = true
 
         if metadataDelegate == nil {
-            metadataDelegate = MetadataDelegate(radioStation: radioStation, metadataUpdateClosure: { metadata, nowPlayingResponse in
-                self.handlePlayerItemChange(metadata: metadata)
+            metadataDelegate = MetadataDelegate(radioStation: radioStation, metadataUpdateClosure: { metadata, nowPlayingResponse, shouldStartFromZero in
+                self.handlePlayerItemChange(metadata: metadata, nowPlayingResponse: nowPlayingResponse)
                 if let passedNowPlayingResponse = nowPlayingResponse { // check if nowPlayingResponse was passed
-                    let position = passedNowPlayingResponse.nowPlaying.elapsed
+                    let position: Int?
                     let duration = passedNowPlayingResponse.nowPlaying.duration
-                    self.handlePlaybackChange(position: position, duration: duration)
+                    
+                    if shouldStartFromZero {
+                        position = 0
+                    } else {
+                        position = passedNowPlayingResponse.nowPlaying.elapsed
+                    }
+
+                    self.handlePlaybackChange(position: position!, duration: duration)
                 }
             })
         }
@@ -68,16 +75,22 @@ class AssetPlayer {
         itemObserver = nil
         rateObserver = nil
         statusObserver = nil
-        
+
         player.pause()
         playerState = .stopped
         
         nowPlayableBehavior.handleNowPlayableSessionEnd()
     }
     
-    private func handlePlayerItemChange(metadata: NowPlayableStaticMetadata) {
-
+    private func handlePlayerItemChange(metadata: NowPlayableStaticMetadata, nowPlayingResponse: NowPlayingResponse?) {
         guard playerState != .stopped else { return }
+
+        mainViewModel.updateNowPlayingContent(nowPlayingImageUrl: metadata.assetURL, nowPlayingArtist: metadata.artist!, nowPlayingSongTitle: metadata.title, nowPlayingAlbum: metadata.albumTitle!)
+
+        if nowPlayingResponse != nil {
+            let upNext = nowPlayingResponse!.playingNext
+            mainViewModel.updateUpNextContent(upNextImageUrl: upNext.song.art, upNextArtist: upNext.song.artist, upNextSongTitle: upNext.song.title, upNextAlbum: upNext.song.album)
+        }
         
         nowPlayableBehavior.handleNowPlayableItemChange(metadata: metadata)
     }
@@ -98,11 +111,10 @@ class AssetPlayer {
     }
     
     private func startPlayback() {
-        
         switch playerState {
-            
         case .stopped:
             playerState = .playing
+            metadataDelegate?.currentStreamTitle = nil
             player.play()
 
         case .playing:
@@ -110,9 +122,12 @@ class AssetPlayer {
             
         case .paused where isInterrupted:
             playerState = .playing
+            metadataDelegate?.currentStreamTitle = nil
+            player.play()
             
         case .paused:
             playerState = .playing
+            metadataDelegate?.currentStreamTitle = nil
             player.play()
         }
     }
@@ -126,17 +141,16 @@ class AssetPlayer {
             
         case .playing where isInterrupted:
             playerState = .paused
-            
+            player.pause()
         case .playing:
             playerState = .paused
             player.pause()
-            
         case .paused:
             break
         }
     }
     
-    func togglePlayPause() {
+    public func togglePlayPause() {
 
         switch playerState {
             
@@ -151,7 +165,7 @@ class AssetPlayer {
         }
     }
     
-    private func nextTrack() {
+    public func nextTrack() {
         if case .stopped = playerState { return }
         radioStation.skipTrack()
         metadataDelegate?.handleMetadataForSkip()
@@ -199,6 +213,7 @@ class AssetPlayer {
                 break
                 
             case .playing where shouldPlay:
+                metadataDelegate?.currentStreamTitle = nil
                 player.play()
                 
             case .playing:

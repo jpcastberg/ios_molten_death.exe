@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		566566A02B5C9EDC005F2531 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5665669F2B5C9EDC005F2531 /* MainView.swift */; };
 		A884F7752A630DA300E58D5A /* radioApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A884F7742A630DA300E58D5A /* radioApp.swift */; };
 		A884F7792A630DA600E58D5A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A884F7782A630DA600E58D5A /* Assets.xcassets */; };
 		A884F77C2A630DA600E58D5A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A884F77B2A630DA600E58D5A /* Preview Assets.xcassets */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5665669F2B5C9EDC005F2531 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		A884F7712A630DA300E58D5A /* radio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = radio.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A884F7742A630DA300E58D5A /* radioApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = radioApp.swift; sourceTree = "<group>"; };
 		A884F7782A630DA600E58D5A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -82,6 +84,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5665669E2B5C9EB6005F2531 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5665669F2B5C9EDC005F2531 /* MainView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		A884F7682A630DA300E58D5A = {
 			isa = PBXGroup;
 			children = (
@@ -108,6 +118,7 @@
 				A89A89042A686924005E82F7 /* RadioStation */,
 				A884F7A02A63E80700E58D5A /* Info.plist */,
 				A884F7742A630DA300E58D5A /* radioApp.swift */,
+				5665669E2B5C9EB6005F2531 /* View */,
 				A884F7782A630DA600E58D5A /* Assets.xcassets */,
 				A884F77A2A630DA600E58D5A /* Preview Content */,
 				A885BBEC2A69C1BD007B06E8 /* azuracast_token.txt */,
@@ -292,6 +303,7 @@
 				A89A89072A686924005E82F7 /* MetadataDelegate.swift in Sources */,
 				A884F7752A630DA300E58D5A /* radioApp.swift in Sources */,
 				A89A890F2A686924005E82F7 /* NowPlayingResponse.swift in Sources */,
+				566566A02B5C9EDC005F2531 /* MainView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

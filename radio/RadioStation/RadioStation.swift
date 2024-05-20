@@ -1,6 +1,8 @@
 import AVFoundation
 
-class RadioStation {
+public let bumperPrefix = "BUMPER "
+
+public class RadioStation {
     private var timer: Timer?
     private var azuracastToken: String?
 
