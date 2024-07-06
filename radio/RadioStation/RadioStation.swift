@@ -21,6 +21,12 @@ public class RadioStation {
             print("no access token available to use to skip track")
             return
         }
+        
+        let logUrl = URL(string: "https://scrobble.castberg.media/log-skip")!
+        var logRequest = URLRequest(url: logUrl)
+        logRequest.httpMethod = "POST"
+        let logTask = URLSession.shared.dataTask(with: logRequest) { (data, response, error) in }
+        logTask.resume()
 
         let url = URL(string: "https://radio.castberg.media/api/station/molten_death.exe/backend/skip")!
         var request = URLRequest(url: url)
