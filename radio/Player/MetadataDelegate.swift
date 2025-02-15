@@ -7,7 +7,7 @@ class MetadataDelegate: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     private var metadataUpdateClosure: ((NowPlayableStaticMetadata, NowPlayingResponse?, Bool) -> Void)
     private var songDidChange = false
     private let nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
-    
+
     init(radioStation: RadioStation, metadataUpdateClosure: @escaping (NowPlayableStaticMetadata, NowPlayingResponse?, Bool) -> Void) {
         self.radioStation = radioStation
         self.metadataUpdateClosure = metadataUpdateClosure
@@ -17,28 +17,43 @@ class MetadataDelegate: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         Task {
             do {
                 let songTitleMeta = groups[0].items.first(where: { $0.commonKey == AVMetadataKey.commonKeyTitle })
-                let albumNameMeta = groups[0].items.first(where: { $0.commonKey == AVMetadataKey.commonKeyAlbumName })
                 let artistMeta = groups[0].items.first(where: { $0.commonKey == AVMetadataKey.commonKeyArtist })
 
-                let songTitle = String(describing: try await songTitleMeta!.load(.value)!)
+                var streamTitle: String? = nil
+                var songTitle: String? = nil
                 var artist = "No Artist"
-                
-                if artistMeta != nil {
-                    artist = String(describing: try await artistMeta!.load(.value)!)
+
+                if let songTitleMeta = songTitleMeta {
+                    songTitle = String(describing: try await songTitleMeta.load(.value)!)
                 }
-                
-                let streamTitle = artist + " - " + songTitle
-                
-                if streamTitle == currentStreamTitle {
+
+                if let artistMeta = artistMeta {
+                    artist = String(describing: try await artistMeta.load(.value)!)
+                } else if songTitle != nil && songTitle!.hasPrefix("BUMPER ") {
+                    artist = ""
+                }
+
+                if let songTitle = songTitle {
+                    streamTitle = artist + " - " + songTitle
+
+                    if streamTitle == currentStreamTitle {
+                        return
+                    }
+                }
+
+                if streamTitle == nil && currentStreamTitle != nil {
                     return
                 }
-                
+
                 let shouldStartFromZero = currentStreamTitle != nil
                 currentStreamTitle = streamTitle
-                
+
                 self.radioStation.fetchNowPlayingApiDataForStreamTitle(with: streamTitle, completion: {nowPlayingResponse in
+                    let artist = nowPlayingResponse.nowPlaying.song.artist
+                    let songTitle = nowPlayingResponse.nowPlaying.song.title
+                    self.currentStreamTitle = artist + " - " + songTitle
                     if songTitle.hasPrefix(bumperPrefix) {
-                        self.metadataUpdateClosure(self.createMetadataForBumper(streamTitle: streamTitle), nowPlayingResponse, shouldStartFromZero)
+                        self.metadataUpdateClosure(self.createMetadataForBumper(streamTitle: self.currentStreamTitle!), nowPlayingResponse, shouldStartFromZero)
                     } else {
                         self.convertNowPlayingResponseToMetadata(with: nowPlayingResponse, completion: {nowPlayableStaticMetadata in
                             self.metadataUpdateClosure(nowPlayableStaticMetadata, nowPlayingResponse, shouldStartFromZero)
@@ -57,13 +72,13 @@ class MetadataDelegate: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     private func convertNowPlayingResponseToMetadata(with nowPlayingResponse: NowPlayingResponse, completion: @escaping (NowPlayableStaticMetadata) -> Void) {
         let song = nowPlayingResponse.nowPlaying.song
         getData(from: song.art, completion: {downloadedImage in
-            
+
             let artworkMetadata = MPMediaItemArtwork(boundsSize: downloadedImage!.size, requestHandler: {_ in
                 return downloadedImage!
             })
-            
+
             let metadata = NowPlayableStaticMetadata(assetURL: song.art, mediaType: .audio, isLiveStream: false, title: song.title, artist: song.artist, artwork: artworkMetadata, albumArtist: song.artist, albumTitle: song.album)
-            
+
             completion(metadata)
         })
     }
@@ -80,7 +95,7 @@ class MetadataDelegate: NSObject, AVPlayerItemMetadataOutputPushDelegate {
 
         return NowPlayableStaticMetadata(assetURL: defaultUrl, mediaType: .audio, isLiveStream: false, title: String(streamTitle.dropFirst(prefix.count)), artist: "molten_death.exe", artwork: artworkMetadata, albumArtist: "molten_death.exe", albumTitle: "bumpers")
     }
-    
+
     private func getData(from url: URL, completion: @escaping (UIImage?) -> Void) {
          URLSession.shared.dataTask(with: url, completionHandler: {(data, response, error) in
              if let data = data {

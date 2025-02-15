@@ -21,7 +21,7 @@ public class RadioStation {
             print("no access token available to use to skip track")
             return
         }
-        
+
         let logUrl = URL(string: "https://scrobbler.castberg.media/log-skip")!
         var logRequest = URLRequest(url: logUrl)
         logRequest.httpMethod = "POST"
@@ -36,31 +36,35 @@ public class RadioStation {
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in }
         task.resume()
     }
-    
-    func fetchNowPlayingApiDataForStreamTitle(with streamTitle: String, completion: @escaping (NowPlayingResponse) -> Void) {
+
+    func fetchNowPlayingApiDataForStreamTitle(with streamTitle: String?, completion: @escaping (NowPlayingResponse) -> Void) {
         let url = URL(string: "https://radio.castberg.media/api/nowplaying/molten_death.exe")!
-        
+
         var request = URLRequest(url: url)
         request.cachePolicy = .reloadIgnoringLocalCacheData
 
         timer?.invalidate()
-        
+
         DispatchQueue.main.async {
             self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
                 let task = URLSession.shared.dataTask(with: request) { data, response, error in
                     do {
                         let nowPlayingResponse = try JSONDecoder().decode(NowPlayingResponse.self, from: data!)
                         let nowPlayingSongText = nowPlayingResponse.nowPlaying.song.text
-                        
-                        if nowPlayingSongText == streamTitle {
+
+                        if streamTitle == nil || nowPlayingSongText == streamTitle! {
                             completion(nowPlayingResponse)
                             self.timer?.invalidate()
+                            return
                         }
                     } catch {
                         print("Error decoding API response: \(error)")
+                        if let dataString = String(data: data!, encoding: .utf8) {
+                            print("RawDATA: \(dataString)")
+                        }
                     }
                 }
-                
+
                 task.resume()
             }
         }

@@ -95,7 +95,7 @@ public class AssetPlayer: ObservableObject {
         nowPlayableBehavior.handleNowPlayableItemChange(metadata: metadata)
     }
     
-    private func handlePlaybackChange(position: Int, duration: Int) {
+    private func handlePlaybackChange(position: Int, duration: Float) {
         
         guard playerState != .stopped else { return }
         
