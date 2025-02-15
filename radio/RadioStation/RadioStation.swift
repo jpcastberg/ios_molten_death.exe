@@ -22,7 +22,7 @@ public class RadioStation {
             return
         }
         
-        let logUrl = URL(string: "https://scrobble.castberg.media/log-skip")!
+        let logUrl = URL(string: "https://scrobbler.castberg.media/log-skip")!
         var logRequest = URLRequest(url: logUrl)
         logRequest.httpMethod = "POST"
         let logTask = URLSession.shared.dataTask(with: logRequest) { (data, response, error) in }
