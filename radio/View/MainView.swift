@@ -133,10 +133,10 @@ struct SongMetadataView: View {
 }
 
 public class MainViewModel: ObservableObject {
-    @Published var nowPlayingImageUrl = URL(string: "https://radio.castberg.media/static/img/generic_song.jpg")!
+    @Published var nowPlayingImageUrl = URL(string: "https://radio.castberg.media/static/uploads/molten_death.exe/album_art.1739658915.png")!
     @Published var nowPlayingTitle = "Loading Artist"
     @Published var nowPlayingAlbum: String? = "Loading Album Name"
-    @Published var upNextImageUrl = URL(string: "https://radio.castberg.media/static/img/generic_song.jpg")!
+    @Published var upNextImageUrl = URL(string: "https://radio.castberg.media/static/uploads/molten_death.exe/album_art.1739658915.png")!
     @Published var upNextTitle = "Loading Artist"
     @Published var upNextAlbum: String? = "Loading Album Name"
 

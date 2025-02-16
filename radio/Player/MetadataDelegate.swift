@@ -1,5 +1,6 @@
 import AVFoundation
 import MediaPlayer
+import SwiftUI
 
 class MetadataDelegate: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     public var currentStreamTitle: String?
@@ -38,6 +39,9 @@ class MetadataDelegate: NSObject, AVPlayerItemMetadataOutputPushDelegate {
 
                     if streamTitle == currentStreamTitle {
                         return
+                    } else if songTitle.hasPrefix("BUMPER ") {
+                        self.metadataUpdateClosure(self.createMetadataForBumper(streamTitle: songTitle), nil, true)
+                        return
                     }
                 }
 
@@ -45,21 +49,8 @@ class MetadataDelegate: NSObject, AVPlayerItemMetadataOutputPushDelegate {
                     return
                 }
 
-                let shouldStartFromZero = currentStreamTitle != nil
                 currentStreamTitle = streamTitle
-
-                self.radioStation.fetchNowPlayingApiDataForStreamTitle(with: streamTitle, completion: {nowPlayingResponse in
-                    let artist = nowPlayingResponse.nowPlaying.song.artist
-                    let songTitle = nowPlayingResponse.nowPlaying.song.title
-                    self.currentStreamTitle = artist + " - " + songTitle
-                    if songTitle.hasPrefix(bumperPrefix) {
-                        self.metadataUpdateClosure(self.createMetadataForBumper(streamTitle: self.currentStreamTitle!), nowPlayingResponse, shouldStartFromZero)
-                    } else {
-                        self.convertNowPlayingResponseToMetadata(with: nowPlayingResponse, completion: {nowPlayableStaticMetadata in
-                            self.metadataUpdateClosure(nowPlayableStaticMetadata, nowPlayingResponse, shouldStartFromZero)
-                        })
-                    }
-                })
+                self.fetchNowPlayingApiDataForStreamTitle(with: streamTitle)
             } catch {}
         }
     }
@@ -67,6 +58,18 @@ class MetadataDelegate: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     func handleMetadataForSkip() {
         let skipTitle = "BUMPER Skipping to next song..."
         self.metadataUpdateClosure(createMetadataForBumper(streamTitle: skipTitle), nil, true)
+    }
+
+    func fetchNowPlayingApiDataForStreamTitle(with streamTitle: String?) {
+        self.radioStation.fetchNowPlayingApiDataForStreamTitle(with: streamTitle, completion: {nowPlayingResponse in
+            let artist = nowPlayingResponse.nowPlaying.song.artist
+            let songTitle = nowPlayingResponse.nowPlaying.song.title
+            let shouldStartFromZero = self.currentStreamTitle != nil
+            self.currentStreamTitle = artist + " - " + songTitle
+            self.convertNowPlayingResponseToMetadata(with: nowPlayingResponse, completion: {nowPlayableStaticMetadata in
+                self.metadataUpdateClosure(nowPlayableStaticMetadata, nowPlayingResponse, shouldStartFromZero)
+            })
+        })
     }
 
     private func convertNowPlayingResponseToMetadata(with nowPlayingResponse: NowPlayingResponse, completion: @escaping (NowPlayableStaticMetadata) -> Void) {
@@ -84,8 +87,8 @@ class MetadataDelegate: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     }
 
     private func createMetadataForBumper(streamTitle: String) -> NowPlayableStaticMetadata {
-        let defaultUrl = URL(string: "https://radio.castberg.media/static/img/generic_song.jpg")!
-        let image = UIImage(named: "DefaultImage.png")!
+        let defaultUrl = URL(string: "https://radio.castberg.media/static/uploads/molten_death.exe/album_art.1739658915.png")!
+        let image = UIImage(named: "DefaultImage")!
         let prefix = "BUMPER "
 
         let artworkMetadata = MPMediaItemArtwork(boundsSize: image.size, requestHandler: {_ in

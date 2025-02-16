@@ -57,6 +57,8 @@ public class AssetPlayer: ObservableObject {
                     self.handlePlaybackChange(position: position!, duration: duration)
                 }
             })
+
+            metadataDelegate?.fetchNowPlayingApiDataForStreamTitle(with: nil) // initial call for song metadata
         }
         
         let playerItem = player.currentItem!
@@ -96,7 +98,7 @@ public class AssetPlayer: ObservableObject {
     }
     
     private func handlePlaybackChange(position: Int, duration: Float) {
-        
+
         guard playerState != .stopped else { return }
         
         let isPlaying = playerState == .playing
